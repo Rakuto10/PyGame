@@ -1,23 +1,39 @@
-import pygame as pg
+import pygame
 
-pg.init()
+class Window:
+    def __init__(self):
+        self.wigth = 600
+        self.height = 400
+        self.fps = 60
+        self.init_window()
 
-class Game:
-    def __init__(self) -> object:
-        windows_size: tuple = (300,000)
-        pg.display.set_caption("Моя игра моя игра она же как и я")
-        self.screen = pg.display.set_mode(windows_size)
-        background_color = (0, 0, 255)  # синий
+    def init_window(self):
+        pygame.init()
+        pygame.mixer.init()
 
+        self.screen = pygame.display.set_mode((self.wigth, self.height))
+        pygame.display.set_caption("Моя игра")
+        clock = pygame.time.Clock()
 
-        self.screen.fill(background_color)
+class EventHandler:
+    def __init__(self):
+        while self.running:
+            clock.tick(self.fps)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    pygame.quit()
 
-        pg.display.flip()
-
+class Run(Window, EventHandler):
+    def __init__(self):
+        super().__init__()
+        self.running = True
         while True:
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    pg.quit()
-                    exit()
+            self.screen.fill((0,0,255))
+            pygame.display.flip()
 
-a = Game()
+class Render:
+    def __init__(self):
+        pass
+
+k = Run()
